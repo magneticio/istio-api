@@ -1,4 +1,4 @@
-FROM alpine:3.7 as builder
+FROM alpine:3.15 as builder
 RUN apk update
 RUN apk add --no-cache go>1.10 git build-base
 ENV GOPATH=/go \
@@ -14,6 +14,6 @@ COPY --from=builder /out/ /out/
 RUN upx --lzma \
         /out/usr/bin/protolock
 
-FROM alpine:3.7
+FROM alpine:3.15
 COPY --from=packer /out/ /
 ENTRYPOINT ["/usr/bin/protolock"]
